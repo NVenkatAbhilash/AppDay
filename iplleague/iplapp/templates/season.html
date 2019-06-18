@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Season</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css\bulma.css' %}">
+    <style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin:30px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 60px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+</style>
+</head>
+<body>
+<div class="dropdown">
+    <span class="button">SEASONS</span>
+    <div class="dropdown-content">
+        {% for year in season_list %}
+            <a href="{% url 'season_url' year %}">{{year}}</a>
+            <br>
+        {% endfor %}
+    </div>
+</div>
+<center>
+    <h1 class="title is-1">SEASON : {{current_season}}</h1>
+    <table class="table">
+        <tr>
+            <th>TEAM1</th>
+            <th>TEAM2</th>
+            <th>VENUE</th>
+            <th>TOSS RESULT</th>
+            <th>TOSS DECISION</th>
+            <th>RESULT</th>
+            <th>PLAYER OF MATCH</th>
+            <th></th>
+        </tr>
+        {% for match in season %}
+        <tr>
+            <td>{{match.team1}}</td>
+            <td>{{match.team2}}</td>
+            <td>{{match.venue}}</td>
+            <td>{{match.toss_winner}}</td>
+            <td>{{match.toss_decision}}</td>
+            <td>{{match.winner}}</td>
+            <td>{{match.player_of_match}}</td>
+            <td><a class="button" href="{% url 'match_url' match.season match.id %}">VIEW MATCH DETAILS</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</center>
+</body>
+</html>
